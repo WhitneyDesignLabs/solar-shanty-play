@@ -14,11 +14,16 @@ any Anthropic/Claude account, plan, or subscription.
 - `SolarShanty.html` is the real playable build and keeps its canonical
   name so it can be diffed/synced directly against the private repo's
   copy.
+- `KNOWN_ISSUES.md` is copied verbatim from the private repo (source of
+  truth lives there) and linked from the landing page footer.
+- `.github/ISSUE_TEMPLATE/bug_report.md` powers the "Found a bug?" link
+  (`/issues/new/choose`) — F8 in-game downloads the report to attach.
 
-**Keeping `SolarShanty.html` in sync:** whenever the private repo's copy
-is refreshed, copy it here verbatim (same filename) and push — no other
-changes needed. The embedded version stamp (Esc → Credits, in-game) is
-the fastest way to check whether this mirror is behind.
+**Keeping `SolarShanty.html` and `KNOWN_ISSUES.md` in sync:** whenever the
+private repo's copies are refreshed, copy both here verbatim (same
+filenames) and push — `tools/publish.sh` in the private repo does this
+automatically. The embedded version stamp (Esc → Credits, in-game) is the
+fastest way to check whether this mirror is behind.
 
 **Keeping `index.html` in sync:** its content (intro copy, controls list,
 first-hour summary) should track the private repo's `README.md` — update
