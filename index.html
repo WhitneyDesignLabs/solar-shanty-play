@@ -153,6 +153,46 @@
     color: var(--ink-faint);
   }
 
+  .requirements {
+    margin: 0.9rem 0 0;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    color: var(--ink-faint);
+  }
+
+  .mobile-notice {
+    margin-top: 1.1rem;
+    padding: 0.85rem 1.1rem;
+    max-width: 42ch;
+    border: 1px solid var(--ground-2-line);
+    border-radius: 4px;
+    background: var(--ground-2);
+  }
+
+  .mobile-notice[hidden] { display: none; }
+
+  .mobile-notice p {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--ink-muted);
+  }
+
+  .copy-btn {
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--sun);
+    background: none;
+    border: 1px solid rgba(242, 164, 56, 0.4);
+    border-radius: 3px;
+    padding: 0.15rem 0.5rem;
+    cursor: pointer;
+  }
+
+  .copy-btn:hover { background: rgba(242, 164, 56, 0.1); }
+
   /* -------------------------------------------------------- instrument strip */
 
   .gauges {
@@ -369,6 +409,10 @@
         <a class="cta" href="SolarShanty.html">Play in browser →</a>
         <span class="cta-note">No install, no account — single file, runs offline</span>
       </div>
+      <p class="requirements">Desktop browser · keyboard + mouse · runs fine on integrated graphics · ~750&nbsp;KB, offline after load.</p>
+      <div class="mobile-notice" id="mobileNotice" hidden>
+        <p>Solar Shanty needs a keyboard and mouse. <button type="button" class="copy-btn" id="copyLinkBtn">Copy the link</button> for your desktop.</p>
+      </div>
     </div>
   </div>
 
@@ -449,6 +493,7 @@
   </div>
 
   <footer>
+    <p>free &amp; open · if Dustyfoot made your day, <a href="https://buymeacoffee.com/WhitneyDesignLabs">toss a line</a></p>
     <p>Whitney Design Labs — design · code · charts</p>
     <p>
       <a href="https://github.com/WhitneyDesignLabs/solar-shanty-play">Source</a>
@@ -546,6 +591,30 @@
   }
 
   requestAnimationFrame(draw);
+})();
+</script>
+<script>
+(function () {
+  // TC-017 part 5: friendly notice, not a block — phones/tablets can still
+  // try, but a keyboard+mouse note beats silent disappointment.
+  var isMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 820;
+  if (!isMobile) return;
+  var notice = document.getElementById('mobileNotice');
+  var btn = document.getElementById('copyLinkBtn');
+  if (!notice || !btn) return;
+  notice.hidden = false;
+  btn.addEventListener('click', function () {
+    var url = window.location.href;
+    var showCopied = function () {
+      btn.textContent = 'Copied!';
+      setTimeout(function () { btn.textContent = 'Copy the link'; }, 1800);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(showCopied, function () { window.prompt('Copy this link:', url); });
+    } else {
+      window.prompt('Copy this link:', url);
+    }
+  });
 })();
 </script>
 </body>
