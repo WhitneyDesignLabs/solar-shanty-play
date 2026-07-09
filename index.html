@@ -2,20 +2,538 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>Solar Shanty</title>
-<meta http-equiv="refresh" content="0; url=SolarShanty.html" />
-<link rel="canonical" href="SolarShanty.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Solar Shanty — Kingfisher Reach</title>
+<meta name="description" content="A first-person solar houseboat life simulator. Play free in your browser." />
 <style>
-  html, body { height: 100%; margin: 0; background: #0d2422; color: #f3ecd9;
-    font-family: -apple-system, "Segoe UI", sans-serif; }
-  main { display: flex; align-items: center; justify-content: center; height: 100%; }
-  a { color: #6fd3c4; }
+  :root {
+    --ground: #0d2422;
+    --ground-2: #123a3a;
+    --ground-2-line: #2c5551;
+    --ink: #f3ecd9;
+    --ink-muted: #93b0aa;
+    --ink-faint: #6c8783;
+    --sun: #f2a438;
+    --water: #6fd3c4;
+    --serif: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: "SF Mono", "Cascadia Code", Consolas, "Roboto Mono", ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* ---------------------------------------------------------------- hero */
+
+  .hero {
+    position: relative;
+    flex: 1;
+    min-height: 78vh;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .hero canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding: clamp(2rem, 6vw, 5.5rem) clamp(1.5rem, 6vw, 5.5rem) clamp(2.5rem, 7vw, 6rem);
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--water);
+    margin: 0 0 0.9rem;
+  }
+
+  .eyebrow::before {
+    content: "◐";
+    display: inline-block;
+    margin-right: 0.55em;
+    color: var(--sun);
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(2.6rem, 8vw, 5rem);
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+    margin: 0 0 0.55rem;
+    text-wrap: balance;
+    max-width: 14ch;
+  }
+
+  .tagline {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    color: var(--ink-muted);
+    margin: 0 0 1.6rem;
+    max-width: 34ch;
+  }
+
+  .lede {
+    font-size: clamp(1rem, 1.4vw, 1.12rem);
+    line-height: 1.68;
+    max-width: 62ch;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .lede b {
+    color: var(--sun);
+    font-weight: 600;
+  }
+
+  .cta-row {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ground);
+    background: var(--sun);
+    padding: 0.85rem 1.5rem;
+    border-radius: 3px;
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .cta:hover, .cta:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(242, 164, 56, 0.28);
+  }
+
+  .cta:focus-visible {
+    outline: 2px solid var(--water);
+    outline-offset: 3px;
+  }
+
+  .cta-note {
+    font-size: 0.82rem;
+    color: var(--ink-faint);
+  }
+
+  /* -------------------------------------------------------- instrument strip */
+
+  .gauges {
+    background: var(--ground-2);
+    border-top: 1px solid var(--ground-2-line);
+    border-bottom: 1px solid var(--ground-2-line);
+  }
+
+  .gauges-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: clamp(1.6rem, 3vw, 2.4rem) clamp(1.5rem, 6vw, 5.5rem);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.6rem, 3vw, 0);
+  }
+
+  .gauge {
+    padding: 0 clamp(0, 3vw, 2.2rem);
+    border-left: 1px solid var(--ground-2-line);
+  }
+
+  .gauge:first-child {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .gauge-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--water);
+    margin: 0 0 0.5rem;
+  }
+
+  .gauge-value {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--ink-muted);
+    margin: 0;
+  }
+
+  /* ---------------------------------------------------------- quick start */
+
+  .quickstart {
+    padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 6vw, 5.5rem);
+  }
+
+  .quickstart-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: clamp(2.4rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  .quickstart h2 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(1.5rem, 2.6vw, 1.9rem);
+    margin: 0 0 0.9rem;
+    text-wrap: balance;
+  }
+
+  .lede-sm {
+    font-size: 0.98rem;
+    line-height: 1.7;
+    color: var(--ink-muted);
+    max-width: 46ch;
+    margin: 0;
+  }
+
+  .lede-sm + .lede-sm {
+    margin-top: 0.9rem;
+  }
+
+  .keys-group + .keys-group {
+    margin-top: 1.9rem;
+  }
+
+  .keys-group h3 {
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--water);
+    margin: 0 0 0.7rem;
+  }
+
+  .keys-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+    padding: 0.55rem 0;
+    border-top: 1px solid var(--ground-2-line);
+  }
+
+  .keys-row:first-of-type {
+    border-top: none;
+  }
+
+  kbd {
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--ink);
+    background: var(--ground-2);
+    border: 1px solid var(--ground-2-line);
+    border-bottom: 2px solid var(--ground-2-line);
+    border-radius: 4px;
+    padding: 0.2rem 0.5rem;
+    white-space: nowrap;
+    min-width: 1.5rem;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .keys-row .action {
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+    line-height: 1.4;
+  }
+
+  .mouse-note {
+    margin: 1.6rem 0 0;
+    padding-top: 1.3rem;
+    border-top: 1px solid var(--ground-2-line);
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--ink-muted);
+  }
+
+  .mouse-note b {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .mouse-note kbd {
+    font-size: 0.72rem;
+    padding: 0.12rem 0.4rem;
+  }
+
+  @media (max-width: 720px) {
+    .quickstart-inner {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* -------------------------------------------------------------- footer */
+
+  footer {
+    padding: 1.4rem clamp(1.5rem, 6vw, 5.5rem);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  footer p {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-faint);
+  }
+
+  footer a {
+    color: var(--ink-faint);
+  }
+
+  @media (max-width: 640px) {
+    .gauges-inner {
+      grid-template-columns: 1fr;
+    }
+    .gauge {
+      border-left: none;
+      padding-left: 0;
+      border-top: 1px solid var(--ground-2-line);
+      padding-top: 1.2rem;
+    }
+    .gauge:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
 </style>
 </head>
 <body>
-<main>
-  <p>Redirecting to <a href="SolarShanty.html">SolarShanty.html</a>&hellip;</p>
-</main>
-<script>location.replace('SolarShanty.html');</script>
+<div class="page">
+  <div class="hero">
+    <canvas id="atmo" aria-hidden="true"></canvas>
+    <div class="hero-content">
+      <p class="eyebrow">Kingfisher&nbsp;Reach</p>
+      <h1>Solar<br />Shanty</h1>
+      <p class="tagline">A first-person solar houseboat life simulator</p>
+      <p class="lede">
+        You live aboard <b>Dustyfoot</b>, a DIY tritoon shanty houseboat: rooftop
+        solar, twin steerable electric pods, a gas kicker you'd rather not use,
+        and a glass cockpit that would make both a yacht broker and a Home
+        Assistant nerd smile. Navigate, anchor, dock, beach, fish, scavenge,
+        upgrade — and keep water, food, fuel and state-of-charge healthy. No
+        death, no sinking, no game over: just consequences, weather windows,
+        and one more day on the water.
+      </p>
+      <div class="cta-row">
+        <a class="cta" href="SolarShanty.html">Play in browser →</a>
+        <span class="cta-note">No install, no account — single file, runs offline</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="gauges">
+    <div class="gauges-inner">
+      <div class="gauge">
+        <p class="gauge-label">Aboard</p>
+        <p class="gauge-value">Rooftop solar, twin electric pods, one gas kicker you'd rather not use</p>
+      </div>
+      <div class="gauge">
+        <p class="gauge-label">To do</p>
+        <p class="gauge-value">Navigate, anchor, dock, beach, fish, scavenge, upgrade</p>
+      </div>
+      <div class="gauge">
+        <p class="gauge-label">Stakes</p>
+        <p class="gauge-value">No death, no sinking, no game over — just one more day on the water</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="quickstart">
+    <div class="quickstart-inner">
+      <div>
+        <p class="eyebrow">Quick&nbsp;start</p>
+        <h2>Your first hour</h2>
+        <p class="lede-sm">
+          You wake at anchor in Heron Cove. The checklist quest walks you
+          through weighing anchor, running the marked channel to Miller's
+          Landing, docking — docking mode is your friend, pods swing ±90°
+          and split throttle — buying provisions, and taking your first
+          courier gig.
+        </p>
+        <p class="lede-sm">
+          After that the Reach is yours: a lake, a winding river with real
+          current, a tidal bay, three marinas, and a fishing pole waiting
+          on Driftwood Beach. Watch the power-flow card — solar in, loads
+          out, the battery is the story of your day.
+        </p>
+      </div>
+      <div>
+        <div class="keys-group">
+          <h3>Ashore</h3>
+          <div class="keys-row"><kbd>WASD</kbd><span class="action">Walk / look (Shift to hurry)</span></div>
+          <div class="keys-row"><kbd>E</kbd><span class="action">Interact</span></div>
+          <div class="keys-row"><kbd>F</kbd><span class="action">Sit at the helm</span></div>
+          <div class="keys-row"><kbd>R</kbd><span class="action">Mount / dismount e-scooter, if owned</span></div>
+          <div class="keys-row"><kbd>Esc</kbd><span class="action">Menu / close screen</span></div>
+        </div>
+        <div class="keys-group">
+          <h3>At the helm</h3>
+          <div class="keys-row"><kbd>W / S</kbd><span class="action">Throttle up / down</span></div>
+          <div class="keys-row"><kbd>A / D</kbd><span class="action">Steer</span></div>
+          <div class="keys-row"><kbd>Q / E</kbd><span class="action">Pod trim, for docking</span></div>
+          <div class="keys-row"><kbd>Space</kbd><span class="action">All stop</span></div>
+          <div class="keys-row"><kbd>Tab</kbd><span class="action">Fullscreen chart</span></div>
+          <div class="keys-row"><kbd>RMB hold</kbd><span class="action">Look around from the seat</span></div>
+        </div>
+        <p class="mouse-note">
+          <b>The mouse works differently in each mode.</b> Walking, it's
+          captured automatically — move it and the view follows, like any
+          first-person game (a stray Esc lets go; one click grabs it back).
+          At the helm it's freed for the dashboard — sliders, the chart,
+          switches — so <kbd>right-click and hold</kbd> is what glances
+          you around, the way you'd actually turn your head from the
+          wheel.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Whitney Design Labs — design · code · charts</p>
+    <p><a href="https://github.com/WhitneyDesignLabs/solar-shanty-play">Source of this page</a></p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var canvas = document.getElementById('atmo');
+  var ctx = canvas.getContext('2d');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var w = 0, h = 0;
+
+  function resize() {
+    var rect = canvas.parentElement.getBoundingClientRect();
+    w = rect.width;
+    h = rect.height;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  var horizon = 0.62; // fraction of height
+
+  function draw(t) {
+    var hy = h * horizon;
+
+    // sky-to-water gradient
+    var sky = ctx.createLinearGradient(0, 0, 0, hy);
+    sky.addColorStop(0, '#0a1e1d');
+    sky.addColorStop(1, '#173f3c');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, w, hy);
+
+    var water = ctx.createLinearGradient(0, hy, 0, h);
+    water.addColorStop(0, '#0f2f2d');
+    water.addColorStop(1, '#081c1b');
+    ctx.fillStyle = water;
+    ctx.fillRect(0, hy, w, h - hy);
+
+    // sun glow, upper-right, breathing very slowly
+    var pulse = reduceMotion ? 0 : Math.sin(t / 3600) * 0.5 + 0.5;
+    var sunX = w * 0.74;
+    var sunY = hy * 0.34;
+    var sunR = Math.max(w, h) * (0.32 + pulse * 0.03);
+    var glow = ctx.createRadialGradient(sunX, sunY, 0, sunX, sunY, sunR);
+    glow.addColorStop(0, 'rgba(242,164,56,' + (0.30 + pulse * 0.06) + ')');
+    glow.addColorStop(0.4, 'rgba(242,164,56,0.09)');
+    glow.addColorStop(1, 'rgba(242,164,56,0)');
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, w, hy);
+
+    // sun disc reflection column on the water
+    var reflGrad = ctx.createLinearGradient(0, hy, 0, h);
+    reflGrad.addColorStop(0, 'rgba(242,164,56,0.16)');
+    reflGrad.addColorStop(1, 'rgba(242,164,56,0)');
+    ctx.fillStyle = reflGrad;
+    ctx.fillRect(sunX - w * 0.06, hy, w * 0.12, h - hy);
+
+    // horizon line
+    ctx.strokeStyle = 'rgba(111,211,196,0.18)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0, hy + 0.5);
+    ctx.lineTo(w, hy + 0.5);
+    ctx.stroke();
+
+    // slow water glints
+    var glints = 5;
+    for (var i = 0; i < glints; i++) {
+      var seed = i * 137.5;
+      var speed = 2600 + i * 400;
+      var phase = reduceMotion ? 0 : (t + seed * 40) % speed;
+      var gx = (phase / speed) * (w + 240) - 120;
+      var gy = hy + (h - hy) * (0.18 + i * 0.16);
+      var gw = 60 + i * 14;
+      var op = 0.10 + (i % 2) * 0.05;
+      ctx.strokeStyle = 'rgba(111,211,196,' + op + ')';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(gx, gy);
+      ctx.lineTo(gx + gw, gy);
+      ctx.stroke();
+    }
+
+    if (!reduceMotion) {
+      requestAnimationFrame(draw);
+    }
+  }
+
+  requestAnimationFrame(draw);
+})();
+</script>
 </body>
 </html>
