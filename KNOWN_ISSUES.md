@@ -12,10 +12,11 @@ Found something not listed here? [Report it](https://github.com/WhitneyDesignLab
   course and speed regardless of what you do — v1 puts the avoiding on
   you, same as real right-of-way rules assume the other guy is paying
   attention.
-- **One save slot.** New Voyage overwrites your current save; there's no
-  slot picker yet. Export/import (Settings) is the only way to keep more
-  than one voyage around.
 - **Keyboard and mouse only.** No gamepad support yet.
+- **Fixed in v0.1.12:** the "one save slot" limitation is gone — four
+  named slots with a picker (Customize voyage) and a most-recent
+  Continue; your older single save appears as slot 1 automatically.
+  Listed here briefly so nobody hunts a limitation that no longer exists.
 - **Tow-feel constants are first-pass, not tuned from playtesting**: the
   dinghy's astern distance/spring smoothness and the optional towing
   drag penalty are reasonable guesses, not measured. If towing something
