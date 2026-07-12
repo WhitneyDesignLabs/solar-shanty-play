@@ -28,6 +28,17 @@ Found something not listed here? [Report it](https://github.com/WhitneyDesignLab
 - **Old Betsy's deck is a flat approximation.** The real derelict barge
   has a slight list that isn't reflected in the walkable deck surface —
   cosmetic only, well inside normal step-up tolerance.
+- **Mobile Bay (Customize voyage → Region) is experimental — real NOAA
+  chart data, sparse services, on purpose.** The bathymetry is real
+  survey data; everything else is deliberately minimal for this first
+  pass: no quests, no gigs, no dockable marinas. Real landmarks (Middle
+  Bay Light, Fort Morgan, Fort Gaines, USS Alabama, Fairhope Municipal
+  Pier, Gaillard Island) are visual + discoverable by sailing near them,
+  not walkable ashore yet. Channel markers trace the compiled bathymetry's
+  own deepest corridor, red-right-returning — a real-data-derived
+  approximation, not an extraction of official NOAA chart aid-to-
+  navigation records. SET SAIL always launches Kingfisher Reach; Mobile
+  Bay is opt-in only.
 
 None of these affect saves, cause crashes, or lose progress. If one
 does, that's a bug in its own right — please report it.
