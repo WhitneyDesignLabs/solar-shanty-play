@@ -28,6 +28,14 @@ Found something not listed here? [Report it](https://github.com/WhitneyDesignLab
 - **Old Betsy's deck is a flat approximation.** The real derelict barge
   has a slight list that isn't reflected in the walkable deck surface —
   cosmetic only, well inside normal step-up tolerance.
+- **Upriver — the Lock and the Millpond are brand new** (Kingfisher's
+  first map expansion): a working lock past the lake gates onto a small
+  elevated pond, with Locktender's Landing above it — the game's first
+  settlement reached on foot, not by docking. HAIL LOCK at the helm
+  requests passage when you're close enough; the gate leaves swing and
+  the chamber rises or falls, no puzzle to it. Same "new enough that
+  nobody but the devs has played it" caveat as the coves above — the
+  lock's timing and the hamlet's siting are first-pass.
 - **Mobile Bay (Customize voyage → Region) is experimental — real NOAA
   chart data, sparse services, on purpose.** The bathymetry is real
   survey data; everything else is deliberately minimal for this first
