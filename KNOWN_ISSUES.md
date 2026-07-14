@@ -53,6 +53,13 @@ Found something not listed here? [Report it](https://github.com/WhitneyDesignLab
   `worldData` registry, and gridded terrain has no walkable-collider
   system at all yet for a deck to sit on. Real docking at Mobile's
   landmarks is future-round work, not a bolt-on.)**
+- **The Bayou (two new creeks off the Run's south bank), fog weather,
+  and the hermit's shack are brand new.** Same "nobody but the devs has
+  played it" caveat as the coves and the Lock above: creek siting,
+  canopy density, fog's visibility collapse, and the shack's pricing/
+  siting are all first-pass. Fog is a real Markov weather state now
+  (rare on Easy, a real presence on Hard) — expect it to show up
+  unannounced on a calm morning.
 
 None of these affect saves, cause crashes, or lose progress. If one
 does, that's a bug in its own right — please report it.
