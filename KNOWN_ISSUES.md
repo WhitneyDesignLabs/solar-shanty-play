@@ -47,6 +47,12 @@ Found something not listed here? [Report it](https://github.com/WhitneyDesignLab
   approximation, not an extraction of official NOAA chart aid-to-
   navigation records. SET SAIL always launches Kingfisher Reach; Mobile
   Bay is opt-in only.
+  **(Checked TC-032: giving the Fairhope pier a real tie-up-able body
+  isn't a cheap reuse here — gridded-region POIs carry no `docks` data,
+  the tie-up/dock-collision path only ever scans Kingfisher's hardcoded
+  `worldData` registry, and gridded terrain has no walkable-collider
+  system at all yet for a deck to sit on. Real docking at Mobile's
+  landmarks is future-round work, not a bolt-on.)**
 
 None of these affect saves, cause crashes, or lose progress. If one
 does, that's a bug in its own right — please report it.
