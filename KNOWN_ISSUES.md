@@ -31,8 +31,8 @@ Found something not listed here? [Report it](https://github.com/WhitneyDesignLab
 - **Upriver — the Lock and the Millpond are brand new** (Kingfisher's
   first map expansion): a working lock past the lake gates onto a small
   elevated pond, with Locktender's Landing above it — the game's first
-  settlement reached on foot, not by docking. HAIL LOCK at the helm
-  requests passage when you're close enough; the gate leaves swing and
+  settlement reached on foot, not by docking. HAIL LOCK on the VHF at the
+  helm requests passage when you're close enough; the gate leaves swing and
   the chamber rises or falls, no puzzle to it. Same "new enough that
   nobody but the devs has played it" caveat as the coves above — the
   lock's timing and the hamlet's siting are first-pass.
@@ -53,6 +53,23 @@ Found something not listed here? [Report it](https://github.com/WhitneyDesignLab
   `worldData` registry, and gridded terrain has no walkable-collider
   system at all yet for a deck to sit on. Real docking at Mobile's
   landmarks is future-round work, not a bolt-on.)**
+- **Florida Keys / Marathon (Customize voyage → Region) is the second
+  real-chart region, same experimental terms as Mobile Bay above.** The
+  Seven Mile Bridge (modern span + the old bridge alongside it), Sombrero
+  Key Light, Pigeon Key, and Boot Key Harbor's mooring field are visual +
+  discoverable, not walkable ashore yet. **Pigeon Key's compiled terrain
+  reads as shallow water, not the small dry island it really is** — the
+  landmark still renders correctly (it's floored above the local water
+  line, same as every other landmark prop), it just won't show a matching
+  bump in the seafloor mesh beneath it yet. Root cause, verified not
+  guessed: the v0 terrain fusion always prefers the bathymetric survey
+  data over land-elevation data wherever the survey has ANY reading, and
+  the survey reports a shallow-but-wet value straight across this
+  particular small island instead of leaving it uncharted. A future round
+  could teach the fusion to defer to land data for small islands like
+  this one; not built this round. Real channel markers (Boot Key Harbor
+  entrance, Moser Channel) are hand-placed from the compiled bathymetry,
+  same honest caveat as Mobile Bay's.
 - **The Bayou (two new creeks off the Run's south bank), fog weather,
   and the hermit's shack are brand new.** Same "nobody but the devs has
   played it" caveat as the coves and the Lock above: creek siting,
