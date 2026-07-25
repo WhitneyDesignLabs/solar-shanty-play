@@ -12,7 +12,17 @@ Found something not listed here? [Report it](https://github.com/WhitneyDesignLab
   course and speed regardless of what you do — v1 puts the avoiding on
   you, same as real right-of-way rules assume the other guy is paying
   attention.
-- **Keyboard and mouse only.** No gamepad support yet.
+- **Xbox controller support is brand new** (the same Helm Control
+  Contract that will later drive Scott's real boat). Deadzone, steering
+  expo, throttle-lever rate/detent, and the docking-toggle hold time are
+  all first-pass honest guesses, tunable in Settings → Gamepad — same
+  "nobody's played it yet, that's what beta feedback is for" caveat as
+  everything else below. Switching input devices mid-voyage (e.g. a
+  gamepad connected while you're mid-throttle on the keyboard) can very
+  occasionally leave the throttle-lever setting starting from a stale
+  value the first time the pad takes over, rather than picking up
+  smoothly from the boat's current speed — a known rough edge, not a bug
+  report we need duplicated.
 - **Fixed in v0.1.12:** the "one save slot" limitation is gone — four
   named slots with a picker (Customize voyage) and a most-recent
   Continue; your older single save appears as slot 1 automatically.
