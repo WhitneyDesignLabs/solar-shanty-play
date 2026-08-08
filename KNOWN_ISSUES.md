@@ -13,6 +13,13 @@ Found something not listed here? [Report it](https://github.com/WhitneyDesignLab
   clear of them by construction), and the water surface near the new
   shores slopes with the datum falloff, same as the Millpond's own
   shores always have.
+- **The boat under the tarp at the Boatyard can't be sailed yet (v0.1.51+).**
+  She's a real, measured hull — the 33′ tritoon this whole project is
+  the design review for — and the Yard Office posts a genuine restoration
+  quote. But the yard won't take the job, and that's deliberate rather
+  than a bug: she needs her own deck, cabin and walk paths built at her
+  true dimensions before anyone can honestly charge for her. Pull the
+  tarp, read the posting, take the letter. Coming.
 - **Boat/dock visuals can overlap at odd docking attitudes.** Physics and
   scoring are correct (you won't clip through anything, fees are fair);
   the hull mesh can visually poke into the dock at unusual angles before
