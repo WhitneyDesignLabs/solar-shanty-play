@@ -4,6 +4,15 @@ Solar Shanty is in open beta — this is the honest list of rough edges as
 of the current build (check your in-game version at Esc → Credits).
 Found something not listed here? [Report it](https://github.com/WhitneyDesignLabs/solar-shanty-play/issues/new/choose) — attach the file F8 downloads and it's basically a repro.
 
+- **The Flowage (v0.1.44+, beyond the aqueduct) is brand new** — the
+  whole country past the opened arch (the basin, the Spillway, Survey
+  Base Camp, Kettle Cove) is dev-tested but nobody has played it yet.
+  Two honest edges: the **drowned snags are visual dressing, not
+  colliders** (the hull passes through a trunk if you aim at one — same
+  rule as crab-pot buoys and pilings; the navigable channels are kept
+  clear of them by construction), and the water surface near the new
+  shores slopes with the datum falloff, same as the Millpond's own
+  shores always have.
 - **Boat/dock visuals can overlap at odd docking attitudes.** Physics and
   scoring are correct (you won't clip through anything, fees are fair);
   the hull mesh can visually poke into the dock at unusual angles before
@@ -57,29 +66,34 @@ Found something not listed here? [Report it](https://github.com/WhitneyDesignLab
   approximation, not an extraction of official NOAA chart aid-to-
   navigation records. SET SAIL always launches Kingfisher Reach; Mobile
   Bay is opt-in only.
-  **(Checked TC-032: giving the Fairhope pier a real tie-up-able body
-  isn't a cheap reuse here — gridded-region POIs carry no `docks` data,
-  the tie-up/dock-collision path only ever scans Kingfisher's hardcoded
-  `worldData` registry, and gridded terrain has no walkable-collider
-  system at all yet for a deck to sit on. Real docking at Mobile's
-  landmarks is future-round work, not a bolt-on.)**
+  **(Checked TC-032; RE-CHECKED TC-053 after the render-truth/harness
+  era: giving the Fairhope pier a real tie-up-able body still isn't a
+  cheap reuse — gridded-region POIs carry no `docks` data, the tie-up/
+  dock-collision path only ever scans Kingfisher's hardcoded `worldData`
+  registry, and gridded terrain still has no walkable-collider system
+  for a deck to sit on. Nothing in TC-044/050's instrumentation changed
+  any of that — it made rendering honest, not structures solid. Real
+  docking at Mobile's landmarks is future-round work, not a bolt-on.)**
+  As of v0.1.48 the real regions DO have their first interactable
+  things: salvage wrecks (one in the Keys, two in Mobile Bay) — beach
+  nearby, walk up, and work the hull. The hull VISUALS are dressing
+  (you can walk through them, like every gridded landmark); the chest
+  is real.
 - **Florida Keys / Marathon (Customize voyage → Region) is the second
   real-chart region, same experimental terms as Mobile Bay above.** The
   Seven Mile Bridge (modern span + the old bridge alongside it), Sombrero
   Key Light, Pigeon Key, and Boot Key Harbor's mooring field are visual +
-  discoverable, not walkable ashore yet. **Pigeon Key's compiled terrain
-  reads as shallow water, not the small dry island it really is** — the
-  landmark still renders correctly (it's floored above the local water
-  line, same as every other landmark prop), it just won't show a matching
-  bump in the seafloor mesh beneath it yet. Root cause, verified not
-  guessed: the v0 terrain fusion always prefers the bathymetric survey
-  data over land-elevation data wherever the survey has ANY reading, and
-  the survey reports a shallow-but-wet value straight across this
-  particular small island instead of leaving it uncharted. A future round
-  could teach the fusion to defer to land data for small islands like
-  this one; not built this round. Real channel markers (Boot Key Harbor
-  entrance, Moser Channel) are hand-placed from the compiled bathymetry,
-  same honest caveat as Mobile Bay's.
+  discoverable, not walkable ashore yet. **FIXED in v0.1.50: Pigeon Key
+  is dry land now.** The old entry here ("compiled terrain reads as
+  shallow water, not the small dry island it really is") is paid: the
+  compiler learned a hand-scoped land-priority rule (the exact "defer to
+  land data for small islands like this one" future-round this entry
+  predicted — see region.toml's [[land_priority]] and compile_region.py),
+  the pack was recompiled, and the island now carries a beached
+  bridge-works barge you can salvage. Listed briefly so nobody hunts a
+  bug that no longer exists. Real channel markers (Boot Key Harbor
+  entrance) are hand-placed from the compiled bathymetry, same honest
+  caveat as Mobile Bay's.
 - **The Bayou (two new creeks off the Run's south bank), fog weather,
   and the hermit's shack are brand new.** Same "nobody but the devs has
   played it" caveat as the coves and the Lock above: creek siting,
