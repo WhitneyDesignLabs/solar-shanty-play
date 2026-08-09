@@ -13,6 +13,20 @@ Found something not listed here? [Report it](https://github.com/WhitneyDesignLab
   clear of them by construction), and the water surface near the new
   shores slopes with the datum falloff, same as the Millpond's own
   shores always have.
+- **The night sky is brand new (v0.1.53+)** and it is real astronomy, not
+  decoration: the Big Dipper, Cassiopeia, Polaris and Orion sit at their
+  true coordinates, the sphere turns with sidereal time, and the moon's
+  position now follows its phase (a new moon is up in the daytime, so
+  midnight can be genuinely dark). Two honest caveats. The **sun is still
+  not seasonal** — sunrise and sunset are fixed, so the stars know what
+  month it is and the sun doesn't; if you sail six game-months you'll get
+  Orion overhead on a 14-hour summer's day. And the sky is anchored to a
+  declared latitude (44°N) chosen for the region the game describes,
+  because the existing stylized sun doesn't correspond to any real one.
+- **Bioluminescence is rare on purpose.** It needs a flat, warm, clear
+  night and then still only sometimes happens. If you've never seen it,
+  that's the feature working; anchor out on a calm summer night and be
+  patient.
 - **The boat under the tarp at the Boatyard can't be sailed yet (v0.1.51+).**
   She's a real, measured hull — the 33′ tritoon this whole project is
   the design review for — and the Yard Office posts a genuine restoration
