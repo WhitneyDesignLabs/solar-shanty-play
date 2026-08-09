@@ -13,16 +13,32 @@ Found something not listed here? [Report it](https://github.com/WhitneyDesignLab
   clear of them by construction), and the water surface near the new
   shores slopes with the datum falloff, same as the Millpond's own
   shores always have.
-- **The night sky is brand new (v0.1.53+)** and it is real astronomy, not
-  decoration: the Big Dipper, Cassiopeia, Polaris and Orion sit at their
-  true coordinates, the sphere turns with sidereal time, and the moon's
-  position now follows its phase (a new moon is up in the daytime, so
-  midnight can be genuinely dark). Two honest caveats. The **sun is still
-  not seasonal** — sunrise and sunset are fixed, so the stars know what
-  month it is and the sun doesn't; if you sail six game-months you'll get
-  Orion overhead on a 14-hour summer's day. And the sky is anchored to a
-  declared latitude (44°N) chosen for the region the game describes,
-  because the existing stylized sun doesn't correspond to any real one.
+- **The night sky is real astronomy, not decoration (v0.1.53+):** the Big
+  Dipper, Cassiopeia, Polaris and Orion sit at their true coordinates, the
+  sphere turns with sidereal time, and the moon's position follows its
+  phase (a new moon is up in the daytime, so midnight can be genuinely
+  dark).
+- **The sun is seasonal now (v0.1.54+), and it changes the game.** The
+  fixed 05:30/19:30 sunrise and sunset are gone: your voyage starts on a
+  real date (shown on the Environment card, next to the day count), and
+  from there day length, noon height and solar harvest all move with the
+  calendar and with how far north the region is. Three things to expect.
+  A **midwinter day at Kingfisher Reach is under nine hours long and the
+  noon sun is low**, so a long voyage genuinely gets harder to power — that
+  is the intent, not a regression. **Easy starts in late spring** with the
+  whole summer ahead of it; Medium starts on the June solstice (the sky
+  every earlier build had); Hard starts in late August, so its days shorten
+  from the first one. And the model is deliberately simple — a circular
+  orbit, no equation of time — so solar noon is exactly 12:00 every day and
+  the autumn dates run a few days early against a real almanac. Saves made
+  before this build load as midsummer, which is the sky they were played
+  under.
+- **Messages in bottles are brand new (v0.1.54+).** Five of them ride the
+  tide around Kingfisher Reach — the loop above the lock, the bayou creeks,
+  the lake, the Run and the bay. They're small and they don't show on the
+  chartplotter, which is on purpose: finding one should be luck and
+  attention, not a waypoint. Nose alongside, step out of the helm, and the
+  prompt is there. One of them starts something.
 - **Bioluminescence is rare on purpose.** It needs a flat, warm, clear
   night and then still only sometimes happens. If you've never seen it,
   that's the feature working; anchor out on a calm summer night and be
